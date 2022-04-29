@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/login.css">
+    <title>Signup</title>
+</head>
+<body>
+    <div class="container">
+        <div class="login">
+            <form action="/signup" method="POST">
+                <div class="entries">
+                    <div style="display: flex; justify-content: space-between;">
+                        <a href="/">
+                            <img src="../static/res/back_logo.png" style="width: 30px;">
+                        </a>
+                        <h2 style="text-align: center;">Signup</h2>
+                    </div>
+                    <br><hr><br>
+                    <label for="user">Username: </label>
+                    <input class="user" name="user" id="user" type="text">
+                    <br><hr><br>
+                    <label for="email">Email ID: </label>
+                    <input class="email" name="email" id="email" type="email" placeholder="abc@example.com">
+                    <br><br><br>
+                    <label for="pass">Password: </label>
+                    <input class="pass" name="pass" id="pass" type="password">
+                </div>
+                <br><hr><br>
+                <div class="redirects">
+                    <input type="submit" value="SIGN UP">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

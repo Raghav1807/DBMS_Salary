@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/login.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="container">
+        <div class="login">
+            <form action="/login" method="POST">
+                <div class="entries">
+                    <h2 style="text-align: center;">Login</h2>
+                    <br><hr><br>
+                    <label for="email">Email ID: </label>
+                    <input class="email" name="email" id="email" type="email" placeholder="abc@example.com">
+                    <br><br><br>
+                    <label for="pass">Password: </label>
+                    <input class="pass" name="pass" id="pass" type="password">
+                </div>
+                <br><br><hr><br>
+                <div class="redirects">
+                    <input type="submit" value="LOG IN">
+                </div>
+                <br>
+                <div class="redirects">
+                    <a class="updatepw" href="/newpass">Update Password</a>
+                    <a class="newuser" href="/signup">New User</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

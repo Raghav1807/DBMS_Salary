@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/home.css">
+    <link rel="stylesheet" href={{ url_for('static', filename='/css/home.css') }}>
+    <title>Home</title>
+</head>
+<body>
+    <div class="container">
+        <a class="logout" href="/">
+            <img src={{ url_for('static', filename='/res/logout_button.png')}} alt="logout" style="height: 50px; position: absolute; top: 10px; left: 10px;">
+        </a>
+        <div class="nav">
+            <h1>Salary Management System</h1>
+        </div>
+        <div class="sub-nav">
+            <div class="links">
+                <a href="/home/r/">READ TABLE</a>
+                <a href="/home/d/">DELETE ROWS</a>
+                <a href="/home/a/">ADD DATA</a>
+                <!-- <a href="/home/c/">CUSTOM QUERY</a> -->
+            </div>
+        </div>
+        {% if task == 0 %}
+            <div class="read-menu">
+                <h2>Waiting for your Actions...</h2>
+            </div>
+            <div class="table-head">
+                <h3>Select your action from the Sub Navbar</h3>
+            </div>
+        {% elif task == 1 %}
+            <div class="read-menu">
+                <form class="read-form" name="read-form" id="read-form" action="/read-form" method="POST">
+                    <select class="table-val" id="table-val" name="table-val">
+                        <option value="0">Choose Table to Display</option>
+                        <option value="1">[Employee] Table</option>
+                        <option value="2">[Employee Salary Details] Table</option>
+                    </select>
+                    <input type="submit" value="Read Table">
+                </form>
+            </div>
+            <br><br>
+            {% if readval == 2 %}
+            <div class="table-head">
+                <h3>[Employee Salary Details] Table</h3>
+            </div>
+            <div class="table">
+                    <table style="border: 3px solid #000; background-color: #ccc;">
+                        <tr>
+                            <th>EMP_ID</th>
+                            <th>EMP_SALARY_YEAR</th>
+                            <th>EMP_SALARY_MONTH</th>
+                            <th>EMP_SALARY_REIMBURSEMENT_DATE</th>
+                            <th>EMP_DEPT_ID</th>
+                            <th>EMP_GRADE_ID</th>
+                            <th>EMP_GROSS_SALARY</th>
+                            <th>EMP_TOTAL_SALARY</th>
+                        </tr>
+                        {% for data in datalist['results'] %}
+                            <tr>
+                                <td>{{data['emp_id']}}</td>
+                                <td>{{data['emp_salary_year']}}</td>
+                                <td>{{data['emp_salary_month']}}</td>
+                                <td>{{data['emp_salary_reimbursement_date']}}</td>
+                                <td>{{data['emp_dept_id']}}</td>
+                                <td>{{data['emp_grade_id']}}</td>
+                                <td>{{data['emp_gross']}}</td>
+                                <td>{{data['emp_total_salary']}}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% elif readval == 1 %}
+            <div class="table-head">
+                <h3>[Employee] Table</h3>
+            </div>
+            <div class="table">
+                    <table style="border: 3px solid #000; background-color: #ccc;">
+                        <tr>
+                            <th>EMP_ID</th>
+                            <th>EMP_TITLE</th>
+                            <th>EMP_NAME</th>
+                            <th>EMP_DOB</th>
+                            <th>EMP_DOJ</th>
+                            <th>EMP_MOBILE_NO</th>
+                            <th>EMP_MAIL_ID</th>
+                            <th>EMP_ADDRESS</th>
+                            <th>EMP_CITY</th>
+                            <th>EMP_STATE</th>
+                            <th>EMP_PINCODE</th>
+                            <th>EMP_AADHAR_NO</th>
+                        </tr>
+                        {% for data in datalist['results'] %}
+                            <tr>
+                                <td>{{data['emp_id']}}</td>
+                                <td>{{data['emp_title']}}</td>
+                                <td>{{data['emp_name']}}</td>
+                                <td>{{data['emp_dob']}}</td>
+                                <td>{{data['emp_doj']}}</td>
+                                <td>{{data['emp_mobile_no']}}</td>
+                                <td>{{data['emp_mail_id']}}</td>
+                                <td>{{data['emp_address']}}</td>
+                                <td>{{data['emp_city']}}</td>
+                                <td>{{data['emp_state']}}</td>
+                                <td>{{data['emp_pincode']}}</td>
+                                <td>{{data['emp_aadhar_no']}}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endif %}
+        {% elif task == 3 %}
+                <div class="read-menu">
+                    <form action="/del-form" method="post" class="delete-form" id="delete-form">
+                        <h3>DELETE ROWS FROM [Employee] TABLE</h3>
+                        <br>
+                        <label for="emp_mail_id">EMP_MAIL_ID</label>
+                        <input type="email" name="emp_mail_id" id="emp_mail_id" placeholder="abc@example.com">
+                        <input type="submit" value="Delete">
+                        {% if delstat != 0 %}
+                        <div style="color: green; font-size: large; font-weight: bold;">Values Deleted Successfully</div>
+                        {% endif %}
+                    </form>
+                </div>
+        {% elif task == 4 %}
+            <div class="read-menu">
+                <form class="add-form" name="add-form" id="add-form" action="/add-form" method="POST">
+                    <select class="table-val" id="table-val" name="table-val">
+                        <option value="0">Choose Table to Add to</option>
+                        <option value="1">[Employee] Table</option>
+                        <option value="2">[Employee Salary Details] Table</option>
+                        <option value="3">[Grade] Table</option>
+                    </select>
+                    <input type="submit" value="Select Table">
+                </form>
+                {% if addstat != 0 %}
+                    <div style="color: green; font-size: large; font-weight: bold;">Data Added Successfully</div>
+                {% endif %}
+            {% if addval == 1 %}
+                <div class="table-head">
+                    <h3>
+                        [Employee] Table        
+                    </h3>
+                </div>
+                <div class="table">
+                    <form action="/add-data/emp/" method="post" class="add-form" name="add-form" id="add-form" style="display: flex; flex-direction: column;">
+                        <div>
+                            <label for="emp_title">EMP_TITLE</label>
+                            <input type="text" name="emp_title" id="emp_title">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_name">EMP_NAME</label>
+                            <input type="text" name="emp_name" id="emp_name">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_dob">EMP_DOB</label>
+                            <input type="text" name="emp_dob" id="emp_dob">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_doj">EMP_DOJ</label>
+                            <input type="text" name="emp_doj" id="emp_doj">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_mobile_no">EMP_MOBILE_NO</label>
+                            <input type="text" name="emp_mobile_no" id="emp_mobile_no">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_mail_id">EMP_MAIL_ID</label>
+                            <input type="text" name="emp_mail_id" id="emp_mail_id">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_address">EMP_ADDRESS</label>
+                            <input type="text" name="emp_address" id="emp_address">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_city">EMP_CITY</label>
+                            <input type="text" name="emp_city" id="emp_city">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_state">EMP_STATE</label>
+                            <input type="text" name="emp_state" id="emp_state">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_pincode">EMP_PINCODE</label>
+                            <input type="text" name="emp_pincode" id="emp_pincode">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_aadhar_no">EMP_AADHAR_NO</label>
+                            <input type="text" name="emp_aadhar_no" id="emp_aadhar_no">
+                        </div>
+                        <br>
+                        <div style="display: flex; text-align: center;">
+                            <input type="submit" value="Add Data" style="width: fit-content; text-align: center; padding: 5px;">
+                        </div>
+                    </form>
+                </div>
+            {% elif addval == 2 %}
+                <div class="table-head">
+                    <h3>[Employee Salary Details] Table</h3>
+                </div>
+                <div class="table">
+                    <form action="/add-data/empsal/" method="post" class="add-form" name="add-form" id="add-form" style="display: flex; flex-direction: column;">
+                        <div>
+                            <label for="emp_id">EMP_ID</label>
+                            <input type="text" name="emp_id" id="emp_id">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_salary_year">EMP_SALARY_YEAR</label>
+                            <input type="text" name="emp_salary_year" id="emp_salary_year">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_salary_month">EMP_SALARY_MONTH</label>
+                            <input type="text" name="emp_salary_month" id="emp_salary_month">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_salary_reimbursement_date">EMP_SALARY_REIMBURSEMENT_DATE</label>
+                            <input type="text" name="emp_salary_reimbursement_date" id="emp_salary_reimbursement_date">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_dept_id">EMP_DEPT_ID</label>
+                            <input type="text" name="emp_dept_id" id="emp_dept_id">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="emp_grade_id">EMP_GRADE_ID</label>
+                            <input type="text" name="emp_grade_id" id="emp_grade_id">
+                        </div>
+                        <br>
+                        <div style="display: flex; text-align: center;">
+                            <input type="submit" value="Add Data" style="width: fit-content; text-align: center; padding: 5px;">
+                        </div>
+                    </form>
+                </div>
+            {% elif addval == 3 %}
+                <div class="table-head">
+                    <h3>[Grade] Table</h3>
+                </div>
+                <div class="table">
+                    <form action="/add-data/grade/" method="post" class="add-form" name="add-form" id="add-form" style="display: flex; flex-direction: column;">
+                        <div>
+                            <label for="grade_name">GRADE_NAME</label>
+                            <input type="text" name="grade_name" id="grade_name">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="grade_short_name">GRADE_SHORT_NAME</label>
+                            <input type="text" name="grade_short_name" id="grade_short_name">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="grade_basic">GRADE_BASIC</label>
+                            <input type="text" name="grade_basic" id="grade_basic">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="grade_ma">GRADE_MA</label>
+                            <input type="text" name="grade_ma" id="grade_ma">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="grade_bonus">GRADE_BONUS</label>
+                            <input type="text" name="grade_bonus" id="grade_bonus">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="grade_pt">GRADE_PT</label>
+                            <input type="text" name="grade_pt" id="grade_pt">
+                        </div>
+                        <br>
+                        <div style="display: flex; text-align: center;">
+                            <input type="submit" value="Add Data" style="width: fit-content; text-align: center; padding: 5px;">
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>

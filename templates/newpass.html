@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/login.css">
+    <title>New Pass</title>
+</head>
+<body>
+    <div class="container">
+        <div class="login">
+            <form action="/newpass" method="POST">
+                <div class="entries">
+                    <div style="display: flex; justify-content: space-between;">
+                        <a href="/">
+                            <img src="../static/res/back_logo.png" style="width: 30px;">
+                        </a>
+                        <h2 style="text-align: center;">Change Password</h2>
+                    </div>
+                    <br><hr><br>
+                    <label for="email">Email ID: </label>
+                    <input class="email" name="email" id="email" type="email" placeholder="abc@example.com">
+                    <br><br><br>
+                    <label for="oldpass">Password: </label>
+                    <input class="oldpass" name="oldpass" id="oldpass" type="password">
+                    <br><br><br>
+                    <label for="newpass">Password: </label>
+                    <input class="newpass" name="newpass" id="newpass" type="password">
+                </div>
+                <br><hr><br>
+                <div class="redirects">
+                    <input type="submit" value="CHANGE PASSWORD">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
